@@ -18,5 +18,5 @@ func (this *AdminController) Show() {
 }
 
 func (this *AdminController) Login() {
-	this.TplNames = "admin/login.tpl"
+	// this.TplNames = "admin/login.tpl"
 }

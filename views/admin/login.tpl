@@ -19,6 +19,7 @@
 			       </div>
 				   <div id="password">密   码
 				     <input type="password" name="textfield2" />
+				     <span style="display:block">吴</span>
 				   </div>
 				   <div id="btn"><a href="#">登录</a><a href="#">清空</a></div>
 			  </div>
