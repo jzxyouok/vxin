@@ -7,16 +7,12 @@ type AdminController struct {
 func (this *AdminController) Index() {
 	this.Data["Website"] = "beego.me"
 	this.Data["Email"] = "astaxie@gmail.com"
-	this.TplNames = "admin/admin.tpl"
+	this.TplNames = "admin/demo.tpl"
+	this.Render()
 }
 
 func (this *AdminController) Show() {
 	this.Data["Website"] = "beego.me"
 	this.Data["Email"] = "astaxie@gmail.com"
-	// this.TplNames = "admin/admin.tpl"
-	this.TplNames = "admin/demo.tpl"
-}
-
-func (this *AdminController) Login() {
-	// this.TplNames = "admin/login.tpl"
+	this.TplNames = "admin/admin.tpl"
 }

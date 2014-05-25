@@ -14,8 +14,12 @@ body{margin:0; padding:0; font-size:9pt;}
 .inf_text{display:block; width:100px; height:20px; font-size:16px; font-weight:bolder; color:#fff; margin-left:17px; margin-top:12px; float:left;}
 .copyright{display:block; float:left; margin-left:17px; margin-top:15px;}
 
-#user{ margin-left:40px; margin-top:45px; height:25px;}
-#password{margin-left:40px; margin-top:25px; height:25px;}
+#login_user{ margin-left:40px; margin-top:45px; height:25px;}
+.login_input{margin-left:40px; margin-top:25px; height:25px;}
+
+#register_user{ margin-left:40px; margin-top:15px; height:25px;}
+.register_input{margin-left:40px; margin-top:5px; height:25px;}
+
 input{width:120px; height:18px; border:solid 1px #aca7a7; font-size:9pt;}
-#btn{margin-left:30px; margin-top:40px;height:25px; margin-right:28px; text-align:center;}
+#btn{margin-left:30px; margin-top:30px;height:25px; margin-right:28px; text-align:center;}
 #btn a{display:block; line-height:25px; background: url(../img/bt_bg.gif); border: solid 1px #b6b6b6; width:65px; float:left; margin-left:15px; text-decoration:none; color:#000;}
