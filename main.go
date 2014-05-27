@@ -10,6 +10,7 @@ func init() {
 	beego.SetStaticPath("/static", "static")
 }
 
+// main function
 func main() {
 	// beego.Router("/", &controllers.MainController{})
 	// // beego.Router("/admin", &admin.AdminController{}, "*:Index;get:Show")
