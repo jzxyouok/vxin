@@ -47,8 +47,14 @@
 		}else if(param.password.length <= 0){
 			alert('请输入密码！')
 		}else{
-			$.post('/admin/public/CheckLogin',param,function(data){
-				alert(data.res);
+			$.post('/admin/public/login',param,function(data){
+				switch(data.res){
+					case "yes" :
+						window.location.href = data.redirectUrl;
+					break ;
+					default :
+					alert(data.res);
+				}
 			})
 		}
 		return false ;

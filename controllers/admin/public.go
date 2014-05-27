@@ -1,7 +1,7 @@
 package admin
 
 import (
-	"fmt"
+	// "fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 	"vxin/common"
@@ -12,35 +12,35 @@ type PublicController struct {
 	beego.Controller
 }
 
-func (this *PublicController) Logintest() {
-	o := orm.NewOrm()
-	user_model := models.User{Id: 1}
-	// user_model.Id = 4
-	// user_model.Id = 2
-	// user_model.LastLocation = "few"
-	// user_model.LastLoginIp = "ip"
-	// user_model.LastLoginTime = 123
-	// user_model.Password = "pwd"
-	// user_model.Role = 12
-	// user_model.Status = 1
-	// id, _ := o.Insert(user_model)
-	o.Read(&user_model)
-	fmt.Println(user_model)
-	this.TplNames = "admin/login.tpl"
-	// this.Render()
-	this.Data["json"] = []interface{}{"name", "吴赐有", "info", map[string]int{"age": 123}}
-	this.ServeJson()
-	fmt.Println(common.Md5("aaa"))
-}
-func (this *PublicController) Login() {
-	this.TplNames = "admin/login.tpl"
-	this.Render()
+// 用户登出
+func (this *PublicController) LoginOut() {
+	this.DelSession("uid")
+	this.Redirect("/admin/public/login", 200)
 }
 
-// 用户注册方法
+// 用户登录
+func (this *PublicController) Login() {
+	method := this.Ctx.Input.Method()
+	if method == "GET" {
+		this.TplNames = "admin/login.tpl"
+		this.Render()
+	} else {
+		result := map[string]interface{}{"res": "no"}
+		user := models.User{Username: this.GetString("username")}
+		if err := orm.NewOrm().Read(&user, "Username"); err == nil {
+			if user.Password == common.Md5(this.GetString("password")) {
+				result = map[string]interface{}{"res": "yes", "redirectUrl": "/admin/admin/index"}
+				this.SetSession("uid", user.Id)
+			}
+		}
+		this.Data["json"] = result
+		this.ServeJson()
+	}
+}
+
+// 用户注册
 func (this *PublicController) Register() {
 	method := this.Ctx.Input.Method()
-
 	if method == "GET" {
 		this.TplNames = "admin/register.tpl"
 		this.Render()
@@ -54,29 +54,14 @@ func (this *PublicController) Register() {
 			Email:    this.GetString("email"),
 		}
 		if err := o.Read(&user, "Username"); err != nil {
-			fmt.Println(o.Insert(&user))
-			fmt.Println("register ok")
-			this.Data["json"] = map[string]interface{}{"res": "ok", "msg": "恭喜您，用户注册成功！"}
-		} else {
-			fmt.Println("register error")
+			userid, _ := o.Insert(&user)
+			this.Data["json"] = map[string]interface{}{
+				"res":         "ok",
+				"msg":         "恭喜您，用户注册成功！",
+				"redirectUrl": "/admin/admin/index",
+			}
+			this.SetSession("uid", userid)
 		}
 		this.ServeJson()
 	}
-}
-
-// 检查用户登录
-func (this *PublicController) CheckLogin() {
-	result := map[string]interface{}{"res": "no", "redirect": "/admin/admin/index"}
-	user := models.User{Username: this.GetString("username")}
-	if err := orm.NewOrm().Read(&user, "Username"); err == nil {
-		if user.Password == common.Md5(this.GetString("password")) {
-			result["res"] = "yes"
-		}
-	}
-	this.Data["json"] = result
-	this.ServeJson()
-}
-
-func (this *PublicController) CheckAccess() {
-
 }
